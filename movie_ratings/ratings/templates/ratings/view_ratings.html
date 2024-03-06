@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ratings for {{ movie.title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <style>
+      :root {
+        --clr-text: #eceff1;
+        --clr-main: #0b1013;
+        --clr-border: #eceff133;
+        --clr-card: #2b2b2b;
+        --clr-button: #5f958e;
+        --clr-button-hover:#37655f;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        min-height: 100vh;
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+      html {
+        
+        background-color: var(--clr-main);
+        text-align: center;
+      }
+
+      body {
+        background-color: var(--clr-main);
+        font-family: "Poppins", sans-serif;
+        text-align: center;
+        color: #ddd;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      .main {
+        padding: 3em 1.5em;
+        display: grid;
+        place-items: center;
+      }
+
+      .main__title {
+        font-weight: 600;
+        font-size: 3.25em;
+        margin-bottom: 0.75em;
+        text-align: center;
+        color: #eceff1;
+      }
+
+      .cards {
+        position: relative;
+      }
+
+      .cards__inner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2.5em;
+        justify-content: space-between;
+      }
+
+      .card {
+        flex: 1 1 calc(50% - 2.5em);
+        padding: 1.5em 2em;
+        max-width: 40rem;
+        display: grid;
+        margin: 0.5rem;
+        gap: 1.25em;
+        color: #eceff1;
+        background-color: #2b2b2b;
+        border: 1px solid #eceff133;
+        border-radius: 15px;
+      }
+
+      .card__title {
+        font-size: 1.05em;
+        font-weight: 600;
+      }
+
+      .card__rating {
+        font-size: 1.75em;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg"
+      style="
+        background-color: var(--clr-main);
+        border-bottom: 0.5px solid var(--clr-border);
+      "
+    >
+      <div class="container-fluid">
+        <a
+          class="navbar-brand"
+          href="{% url 'movie_list' %}"
+          style="color: var(--clr-text); font-weight: 600"
+          >Home</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav" style="font-weight: 600" ;>
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="{% url 'add_movie' %}"
+              style="color: var(--clr-text)"
+              >Add Movie</a
+            >
+            <a class="nav-link" href="#" style="color: var(--clr-text)"
+              >Features</a
+            >
+            <a class="nav-link" href="#" style="color: var(--clr-text)"
+              >Pricing</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+    <main class="main flow">
+      <h1 class="main__title">Ratings of {{ movie.title }}</h1>
+      <div class="main__cards cards">
+        <div class="cards__inner">
+          {% if ratings %} {% for rating in ratings %}
+          <div class="cards__card card">
+            <h2 class="card__title name">Name: {{ rating.name }}</h2>
+            <p class="card__rating">
+              Point: <span style="color: #dadd28">{{ rating.rating }}</span>
+            </p>
+          </div>
+          {% endfor %} {% else %}
+          <p class="card__no-rating">No ratings available for this movie.</p>
+          {% endif %}
+        </div>
+      </div>
+    </main>
+  </body>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+</html>
