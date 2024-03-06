@@ -23,7 +23,7 @@
         --clr-border: #eceff133;
         --clr-card: #2b2b2b;
         --clr-button: #5f958e;
-        --clr-button-hover:#37655f;
+        --clr-button-hover: #37655f;
       }
       *,
       *::before,
@@ -41,14 +41,18 @@
       }
 
       .container {
+        display: flex;
         width: 800px;
         margin: auto auto;
         padding: 20px;
       }
 
-      .container h1 {
+      .container h1,
+      h1 {
+        left: 20px;
         color: White;
         text-align: center;
+        padding: 20px;
       }
 
       .container ul {
@@ -138,11 +142,11 @@
         </div>
       </div>
     </nav>
+    <h1>Movie List</h1>
     <div class="container">
-      <h1>Movie List</h1>
       <ul class="list-group">
         {% for movie in movies %}
-        <li class="list-group-item">
+        <li class="list-group-item" style="flex-direction: column-reverse; align-items:stretch;">
           <div class="card">
             <div class="row g-0">
               <div class="col-md-4">
