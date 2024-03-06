@@ -19,9 +19,9 @@
     <style>
       :root {
         --clr-text: #eceff1;
-        --clr-main: #0b1013;
+        --clr-main: #201f31;
         --clr-border: #eceff133;
-        --clr-card: #2b2b2b;
+        --clr-card: #2a2b3c;
         --clr-button: #5f958e;
         --clr-button-hover: #37655f;
       }
@@ -37,63 +37,118 @@
         background-color: var(--clr-main);
         font-family: "Poppins", sans-serif;
         font-weight: 400;
+        font-size: 20px;
         font-style: normal;
       }
 
       .container {
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: repeat(9, 1fr);
+        grid-template-rows: 100px 1fr 0.5fr 0.5fr 50px;
+        gap: 30px;
+        padding: 10px;
+      }
+
+      .container div {
+        color: var(--clr-text);
+      }
+
+      .header {
+        grid-column-start: 1;
+        grid-column-end: 10;
         display: flex;
-        width: 800px;
-        margin: auto auto;
-        padding: 20px;
+        margin-top: 10px;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        font-size: 40px;
       }
 
-      .container h1,
-      h1 {
-        left: 20px;
-        color: White;
-        text-align: center;
-        padding: 20px;
+      .movie-card {
+        grid-row: 2 / 4;
+        grid-column: 3 / 8;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: repeat(10, 1fr);
+        background-color: var(--clr-card);
+        border: 1px solid var(--clr-border);
+        border-radius: 20px;
+        gap: 1px;
       }
 
-      .container ul {
+      .movie-poster {
+        grid-row: 1 / 11;
+        grid-column: 1 / 4;
+      }
+
+      .movie-poster img {
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        object-fit: cover;
+      }
+
+      .edit-button {
+        grid-row: 2 / 2;
+        grid-column: 9 / 9;
+        width: 34px;
+        height: 30px;
+        background-color: #ffbade;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+      }
+
+      .edit-button img {
+        width: 32px;
+        height: 21px;
+        display: flex;
+      }
+
+      .movie-title {
+        grid-row: 2 / 2;
+        grid-column: 5 / 9;
+        font-size: 40px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
         padding: 0;
       }
 
-      .container li {
-        background-color: #fff;
-        border-radius: 5px;
-        padding: 10px;
-        margin-bottom: 10px;
-        box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+      .movie-title-border {
+        grid-row: 3 / 4;
+        grid-column: 4 / 11;
+        border-bottom: 2px solid #ffbade;
+      }
+
+      .movie-rating {
+        grid-row: 4 / 4;
+        grid-column: 5 / 8;
+      }
+
+      .movie-rating-total {
+        grid-row: 5 / 5;
+        grid-column: 5 / 8;
+      }
+
+      .movie-rating,
+      .movie-rating-total {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: flex-start;
+        text-align: center;
+        padding-top: 10px;
       }
 
-      .rate,
-      .view {
-        text-decoration: none;
-        color: #007bff;
-        margin-right: 10px;
-      }
-
-      .rate:hover,
-      .view:hover {
-        text-decoration: underline;
-      }
-
-      .add-button {
-        text-decoration: none;
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        display: inline-block;
-      }
-
-      .add-button:hover {
-        background-color: #0056b3;
+      .footer {
+        grid-row: 5 / 5;
+        grid-column: 1 / 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     </style>
   </head>
@@ -102,7 +157,7 @@
       class="navbar navbar-expand-lg"
       style="
         background-color: var(--clr-main);
-        border-bottom: 0.5px solid var(--clr-border);
+        border-bottom: 3px solid #ffbade;
       "
     >
       <div class="container-fluid">
@@ -132,72 +187,33 @@
               style="color: var(--clr-text)"
               >Add Movie</a
             >
-            <a class="nav-link" href="#" style="color: var(--clr-text)"
-              >Features</a
-            >
-            <a class="nav-link" href="#" style="color: var(--clr-text)"
-              >Pricing</a
-            >
           </div>
         </div>
       </div>
     </nav>
-    <h1>Movie List</h1>
     <div class="container">
-      <ul class="list-group">
-        {% for movie in movies %}
-        <li class="list-group-item" style="flex-direction: column-reverse; align-items:stretch;">
-          <div class="card">
-            <div class="row g-0">
-              <div class="col-md-4">
-                {% if movie.image %}
-                <img
-                  src="{{ movie.image.url }}"
-                  alt="{{ movie.title }}"
-                  draggable="false"
-                  style="max-width: 100%"
-                />
-                {% else %}
-                <img
-                  src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
-                  class="img-fluid w-100 h-100"
-                  alt="placeholder"
-                />
-                {% endif %}
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">Name: {{ movie.title }}</h5>
-                  <p class="card-text">{{ movie.description }}</p>
-                </div>
-              </div>
-            </div>
-            <div class="card-footer">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="links">
-                  <a
-                    href="{% url 'add_rating' movie.id %}"
-                    class="btn btn-sm btn-outline-primary me-2"
-                    >Rate</a
-                  >
-                  <a
-                    href="{% url 'view_ratings' movie.id %}"
-                    class="btn btn-sm btn-outline-info"
-                    >View</a
-                  >
-                </div>
-                <form action="{% url 'delete_movie' movie.id %}" method="post">
-                  {% csrf_token %}
-                  <button class="btn btn-sm btn-outline-danger" type="submit">
-                    Delete
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </li>
-        {% endfor %}
-      </ul>
+      <div class="header" style="font-size: 50px; font-weight: 600">
+        Movie List
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img
+            src="https://s3-alpha-sig.figma.com/img/3d08/053d/4084ffb81a76defb08423964f346327a?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YHg2Ec2WUcYFj9pNLhqWkTibrLsFgG4qsFxIogBc4om-GSMvCmSZFeIk2-UglssaPv3D6F7tL4nto4j0H7rx9tv6GMUXzXSkjkTipQ23CC8VtjkMgzzpk8h~4Y3ptRNlSCRA6IGHe8C81UfI0BSSMLDYXcxMxJXui7YvoqMqLNw-qy7XnDP2QZ08hPHkShE6lvSyLOwaPTDzXQkc4UEJzctstEBtzY8zD7HAyD0-OeJ8CiwMIpJHsVkE~zSE2Ld1M73t-6PqVtH2KVZrPjPB4f2SkSmmRXLP~RbN7Tsyrm7z2ZL15jTPyd50gXGjieuG-bgGm2UvSnbF4mperbbKQQ__"
+            alt="Movie Poster"
+          />
+        </div>
+        <div class="movie-title">Movie Title</div>
+        <div class="movie-title-border"></div>
+        <div class="movie-rating">Movie rating...</div>
+        <div class="movie-rating-total">Movie total rating...</div>
+        <div class="edit-button">
+          <img
+            src="https://s3-alpha-sig.figma.com/img/1298/c9c2/9ffd8adc89a46fad7916177264619b97?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ECpkldLH65TV7XSKLPHi4TR8xPLsVctQS-ttOMeYBc7gInL115lpbBYpDL9wmlLtqHEAl3x0OoyeWRKzLu5e0Om9RV3bO1v1H-A6CUlW-tTdM-gfwH13cK0A1PcYoX6IquWdzkYDnfjwKMyY6xMNoI8HXcyPpZAeq47amQZtyRmEq8fWjwqF1z3Ncp059YZ3M-edSYTT1cAx0TG6Dg7UPe9RD1qlwbOoy1LRyn2friEkGkiGPXVGNbsXppuPmWhHlpOF4CyG4NcbXaeBh6GXRiDvddLqqUHLuuKtlkLGkWbpAHM8BMs7-nrLhjNXP0Hw72A994K4HY5q~WdC9t6qAg__"
+            alt="Edit button"
+          />
+        </div>
+      </div>
+      <div class="footer">Footer</div>
     </div>
   </body>
   <script
