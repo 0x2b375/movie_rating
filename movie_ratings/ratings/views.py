@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Movie, Rating
+from django.db.models import Avg, Count
 from .forms import MovieForm, RatingForm
 # Create your views here.
 
 
 def movie_list(request):
-    movies = Movie.objects.all()
+    movies = Movie.objects.annotate(
+        avg_rating=Avg('rating__rating'),
+        total_ratings=Count('rating')
+    )
     return render(request, 'ratings/movie_list.html', {'movies': movies})
 
 

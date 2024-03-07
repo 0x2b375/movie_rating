@@ -26,8 +26,8 @@
       :root {
         --clr-text: #eceff1;
         --clr-main: #201f31;
-        --clr-border: #FFBADE;
-        --clr-card: #2A2B3C;
+        --clr-border: #ffbade;
+        --clr-card: #2a2b3c;
         --clr-button: #5f958e;
         --clr-button-hover: #37655f;
       }
@@ -135,9 +135,27 @@
       .img-dropdown:hover {
         background-color: #bb5188;
       }
+      
+      .navbar-brand {
+        background-color: #ffbade99;
+      }
 
       .navbar-brand:hover {
         background-color: #bb5188;
+      }
+
+      .ui.dropdown.show {
+        padding: 0;
+      }
+
+      .dropdown-menu a:hover,.dropdown-menu button:hover {
+        background-color: #ffbade99; 
+        color: white;
+      }
+
+      .dropdown-menu {
+        padding: 0;
+        min-width: 7.401rem;
       }
     </style>
   </head>
@@ -156,7 +174,7 @@
           class="navbar-brand nav-home"
           href="{% url 'movie_list' %}"
           style="
-            background-color: #ffbade99;
+            
             color: #eaebf2;
             padding: 5px 15px;
             margin-left: 50px;
@@ -214,20 +232,62 @@
           </div>
           <div class="movie-ratings">
             <h2>{{ movie.title }}</h2>
-            <p>Rating: 8.67785</p>
-            <p>Total ratings: 5</p>
+            {% if movie.avg_rating %}
+            <p>Rating: {{ movie.avg_rating|floatformat:"2" }}</p>
+            <p>Total ratings: {{ movie.total_ratings }}</p>
+            {% else %}
+            <p>No ratings yet</p>
+            <p>Total ratings: 0</p>
+            {% endif %}
           </div>
           <div class="movie-dropdown">
-            <img
-              src="https://s3-alpha-sig.figma.com/img/1298/c9c2/9ffd8adc89a46fad7916177264619b97?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ECpkldLH65TV7XSKLPHi4TR8xPLsVctQS-ttOMeYBc7gInL115lpbBYpDL9wmlLtqHEAl3x0OoyeWRKzLu5e0Om9RV3bO1v1H-A6CUlW-tTdM-gfwH13cK0A1PcYoX6IquWdzkYDnfjwKMyY6xMNoI8HXcyPpZAeq47amQZtyRmEq8fWjwqF1z3Ncp059YZ3M-edSYTT1cAx0TG6Dg7UPe9RD1qlwbOoy1LRyn2friEkGkiGPXVGNbsXppuPmWhHlpOF4CyG4NcbXaeBh6GXRiDvddLqqUHLuuKtlkLGkWbpAHM8BMs7-nrLhjNXP0Hw72A994K4HY5q~WdC9t6qAg__"
-              alt="dropdown"
-              draggable="false"
-              class="img-dropdown"
-            />
+            <div class="dropdown">
+              <button
+                class="btn dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton{{ movie.id }}"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                style="background-color: #ffbade"
+              >
+                <img
+                  src="https://s3-alpha-sig.figma.com/img/1298/c9c2/9ffd8adc89a46fad7916177264619b97?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ECpkldLH65TV7XSKLPHi4TR8xPLsVctQS-ttOMeYBc7gInL115lpbBYpDL9wmlLtqHEAl3x0OoyeWRKzLu5e0Om9RV3bO1v1H-A6CUlW-tTdM-gfwH13cK0A1PcYoX6IquWdzkYDnfjwKMyY6xMNoI8HXcyPpZAeq47amQZtyRmEq8fWjwqF1z3Ncp059YZ3M-edSYTT1cAx0TG6Dg7UPe9RD1qlwbOoy1LRyn2friEkGkiGPXVGNbsXppuPmWhHlpOF4CyG4NcbXaeBh6GXRiDvddLqqUHLuuKtlkLGkWbpAHM8BMs7-nrLhjNXP0Hw72A994K4HY5q~WdC9t6qAg__"
+                  alt="Options"
+                  style="width: 20px; height: 20px"
+                />
+              </button>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="dropdownMenuButton{{ movie.id }}"
+              >
+                <li>
+                  <a
+                    class="dropdown-item"
+                    style="border-bottom: 1px solid #000000"
+                    href="{% url 'view_ratings' movie.id %}"
+                    >Edit</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    style="border-bottom: 1px solid #000000"
+                    href="{% url 'add_rating' movie.id %}"
+                    >Rate</a
+                  >
+                </li>
+                <li><form action="{% url 'delete_movie' movie.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item" style="border-bottom: 1px solid #000000">Delete</button>
+                </form></li>
+              </ul>
+            </div>
           </div>
         </div>
         {% endfor %}
       </div>
+      
+    </div>
     </main>
   </body>
   <script
