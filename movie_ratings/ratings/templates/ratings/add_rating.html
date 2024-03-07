@@ -144,19 +144,26 @@
       </div>
     </div>
   </nav>
-    <div class="styling">
-      <div class="container">
-        <h1>Rate {{ movie.title }}</h1>
-        <form method="post">
-          {% csrf_token %}
-          <label for="id_name">Your Name:</label>
-          <input type="text" name="name" id="id_name" minlength="4" required /><br />
-          <label for="rating">Rating:</label>
-          <input type="number" name="rating" id="rating" min="1" max="5" /><br />
-          <button type="submit">Submit</button>
-        </form>
+  <div class="styling">
+    <div class="container">
+      
+      <h1>Rate {{ movie.title }}</h1>
+      <form method="post">
+        {% csrf_token %}
+        <label for="id_name">Your Name:</label>
+        <input type="text" name="name" id="id_name" minlength="4" required /><br />
+        <label for="rating">Rating:</label>
+        <input type="number" name="rating" id="rating" min="1" max="5" required /><br />
+        <button type="submit">Submit</button>
+      </form>
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} mt-5">
+          {{ message }}
       </div>
+      {% endfor %}
     </div>
+  </div>
+  
   </div>
   
   </body>

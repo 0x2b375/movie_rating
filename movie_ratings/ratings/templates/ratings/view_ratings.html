@@ -164,6 +164,13 @@
             <p class="card__rating">
               Point: <span style="color: #dadd28">{{ rating.rating }}</span>
             </p>
+            <form action="{% url 'delete_rating' rating.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+            <a href="{% url 'edit_rating' rating.id %}" class="btn btn-primary"
+              >Edit</a
+            >
           </div>
           {% endfor %} {% else %}
           <p class="card__no-rating">No ratings available for this movie.</p>
