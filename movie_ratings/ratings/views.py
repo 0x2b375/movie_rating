@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Movie, Rating
 from django.db.models import Avg, Count
 from .forms import MovieForm, RatingForm
+from django.db.models import Q
 from django.contrib import messages
 # Create your views here.
 
@@ -74,6 +75,7 @@ def delete_rating(request, rating_id):
         rating.delete()
         return redirect('view_ratings', movie_id=rating.movie.id)
 
+
 def edit_rating(request, rating_id):
     rating = get_object_or_404(Rating, id=rating_id)
     if request.method == 'POST':
@@ -84,3 +86,12 @@ def edit_rating(request, rating_id):
     else:
         form = RatingForm(instance=rating)
     return render(request, 'ratings/edit_rating.html', {'form': form, 'rating': rating})
+
+def search_feature(request):
+    if request.method == 'POST':
+        search_query = request.POST['search_query']
+        movies = Movie.objects.filter(title__contains=search_query)
+        return render(request, 'ratings/search_list.html', {'query':search_query, 'movies':movies})
+    else:
+        return render(request, 'ratings/search_list.html',{})
+
