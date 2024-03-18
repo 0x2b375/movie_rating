@@ -87,14 +87,14 @@ def edit_rating(request, rating_id):
         form = RatingForm(instance=rating)
     return render(request, 'ratings/edit_rating.html', {'form': form, 'rating': rating})
 
+
 def search_feature(request):
-    if request.method == 'POST':
-        search_query = request.POST['search_query']
-        movies = Movie.objects.filter(title__contains=search_query).annotate(
+    query = request.POST.get('search_query', None)
+    if query:
+        movies = Movie.objects.filter(title__contains=query).annotate(
             avg_rating=Avg('rating__rating'),
             total_ratings=Count('rating')
         )
-        return render(request, 'ratings/search_list.html', {'query': search_query, 'movies': movies})
+        return render(request, 'ratings/search_list.html', {'query': query, 'movies': movies})
     else:
         return render(request, 'ratings/search_list.html', {})
-
