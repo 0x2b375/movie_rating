@@ -1,3 +1,4 @@
+{% include 'ratings/header.html' %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -138,14 +139,6 @@
         background-color: #bb5188;
       }
 
-      .navbar-brand {
-        background-color: #ffbade99;
-      }
-
-      .navbar-brand:hover {
-        background-color: #bb5188;
-      }
-
       .ui.dropdown.show {
         padding: 0;
       }
@@ -162,73 +155,6 @@
 
     </style>
   <body>
-    <nav
-      class="navbar navbar-expand-lg"
-      style="
-        background-color: var(--clr-main);
-        border-bottom: 1px solid #ffbade;
-        font-weight: 600;
-        font-family: 'Poppins', sans-serif;
-      "
-    >
-      <div class="container-fluid">
-        <a
-          class="navbar-brand nav-home"
-          href="{% url 'movie_list' %}"
-          style="
-            color: #eaebf2;
-            padding: 5px 15px;
-            margin-left: 50px;
-            border-radius: 5px;
-            font-size: 25px;
-          "
-          >Home</a
-        >
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav" style="font-weight: 600" ;>
-            <a
-              class="nav-link active"
-              aria-current="page"
-              href="{% url 'add_movie' %}"
-              style="color: #eaebf2; font-size: 18px; margin-left: 50px"
-              >Add Movie</a
-            >
-          </div>
-        </div>
-        <form
-          class="d-flex"
-          role="search"
-          method="POST"
-          action="{% url 'search-view' %}"
-        >
-          {% csrf_token %}
-          <div class="input-group">
-            <input
-              class="form-control"
-              type="search"
-              placeholder="Search movie"
-              aria-label="Search"
-              name="search_query"
-              style="font-style: italic"
-            />
-            <button class="btn btn-outline-light search-button" type="submit">
-              <i class="bi bi-search"></i>
-            </button>
-          </div>
-        </form>
-      </div>
-    </nav>
     <main>
         <div class="title">
         <h1>Search Results</h1>
