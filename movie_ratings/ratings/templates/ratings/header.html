@@ -1,5 +1,5 @@
 <nav
-  class="navbar navbar-expand-lg sticky-top"
+  class="navbar navbar-expand-lg"
   style="
     border-bottom: 1px solid #ffbade;
     font-weight: 600;
@@ -9,13 +9,8 @@
   <div class="container-fluid">
     <a
       class="navbar-brand nav-home"
-      href="{% url 'movie_list' %}"
-      style="
-        color: #eaebf2;
-        padding: 5px 5px;
-
-        font-size: 25px;
-      "
+      href="{% url 'hero_section' %}"
+      style="color: #eaebf2; padding: 5px 5px; font-size: 25px"
       >Home</a
     >
     <button
@@ -60,6 +55,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav me-auto" style="font-weight: 600" ;>
+        <a
+          class="nav-link active"
+          aria-current="page"
+          href="{% url 'movie_list' %}"
+          style="color: #eaebf2; font-size: 18px; margin-left: 50px"
+          >Movie</a
+        >
         <a
           class="nav-link active"
           aria-current="page"

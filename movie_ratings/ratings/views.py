@@ -6,6 +6,8 @@ from django.db.models import Q
 from django.contrib import messages
 # Create your views here.
 
+def hero_section(request):
+    return render(request, 'ratings/hero.html')
 
 def movie_list(request):
     movies = Movie.objects.annotate(
